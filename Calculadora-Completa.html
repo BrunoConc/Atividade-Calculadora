@@ -1,0 +1,137 @@
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Completa</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #1a1a1a; 
+        }
+
+        .calculadora {
+            width: 320px;
+            background-color: #2a2d37;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+      
+        #tela {
+            width: 100%;
+            height: 80px;
+            background-color: #1e1e1e;
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            text-align: right;
+            padding: 20px;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+     
+        .botoes {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+           
+        }
+
+        button {
+            padding: 20px;
+            font-size: 1.5em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            background-color: #3b3f4d;
+            color: #fff;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: #4a4e5a;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculadora">
+        <input type="text" id="tela" readonly>
+        <div class="botoes">
+            <!-- Funções -->
+            <button class="funcao" onclick="limparTela()">C</button>
+            <button class="funcao" onclick="deletar()">⌫</button>
+            <button class="funcao" onclick="adicionarCaractere('%')">%</button>
+            <button class="operador" onclick="adicionarCaractere('/')">÷</button>
+            <button class="operador" onclick="adicionarCaractere('*')">×</button>
+
+
+            <button onclick="adicionarCaractere('7')">7</button>
+            <button onclick="adicionarCaractere('8')">8</button>
+            <button onclick="adicionarCaractere('9')">9</button>
+            <button class="operador" onclick="adicionarCaractere('-')">−</button>
+            <button onclick="adicionarCaractere('4')">4</button>
+            <button onclick="adicionarCaractere('5')">5</button>
+            <button onclick="adicionarCaractere('6')">6</button>
+            <button class="operador" onclick="adicionarCaractere('+')">+</button>
+            <button onclick="adicionarCaractere('1')">1</button>
+            <button onclick="adicionarCaractere('2')">2</button>
+            <button onclick="adicionarCaractere('3')">3</button>
+            <button id="igual" onclick="calcular()">=</button>
+            <button onclick="adicionarCaractere('0')">0</button>
+            <button onclick="adicionarCaractere('.')">.</button>
+        </div>
+    </div>
+
+    <script>
+        /* JavaScript: Gerencia as interações do usuário, como clicar nos botões, limpar a tela e realizar os cálculos. */
+
+        const tela = document.getElementById('tela');
+
+        // Adiciona o número ou operador clicado na tela
+        function adicionarCaractere(caractere) {
+            tela.value += caractere;
+        }
+
+        // Limpa toda a tela
+        function limparTela() {
+            tela.value = '';
+        }
+
+        // Deleta o último caractere digitado
+        function deletar() {
+            tela.value = tela.value.slice(0, -1);
+        }
+
+        // Realiza o cálculo da expressão na tela
+        function calcular() {
+            try {
+                // A função eval() calcula uma string de expressão matemática
+                // É simples, mas deve ser usada com cuidado em projetos reais por segurança
+                const resultado = eval(tela.value);
+
+                // Exibe erro se o resultado não for um número finito (ex: divisão por zero)
+                if (!isFinite(resultado)) {
+                    tela.value = "Erro";
+                } else {
+                    tela.value = resultado;
+                }
+            } catch (error) {
+                // Captura qualquer erro de sintaxe na expressão (ex: "5++3")
+                tela.value = "Erro";
+            }
+        }
+    </script>
+</body>
+</html>
